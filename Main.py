@@ -1,7 +1,7 @@
 
-
 def main():
     import os
+    from defaults import DEFAULT_ROOMS, DEFAULT_NPCS, DEFAULT_ATTRIBUTES
 
     user_file = ""
 
@@ -46,13 +46,33 @@ def main():
             elif command.upper() == "B":
                 preset_manager()
 
+    def write_preset(name, rooms=DEFAULT_ROOMS, npcs=DEFAULT_NPCS, attributes=DEFAULT_ATTRIBUTES, type="new"):
+        
+
     def preset_manager():
-        clear()
-        presets = read_file("user_file")
-        print("Current presets:")
-        for line in presets():
-            print(f"\t{line}")
-        print("\nEnter \"A\" to create a new preset.\nEnter \"B\" to edit existing preset.")
+        global user_file
+        changing_presets = True
+        while changing_presets:
+            clear()
+            print("Current presets:")
+            for line in presets:
+                print(f"\t{line}")
+            print("\nEnter \"A\" to create a new preset."
+                  "\nEnter \"B\" to edit existing preset."
+                  "\nEnter \"C\" to delete an existing preset.")
+            preset_command = input("Enter: ")
+            if preset_command == "A":
+                creating_preset = True
+                while creating_preset:
+                    new_preset = input("Enter new preset file name: ")
+                    if os.path.exists(new_preset) or os.path.isfile(new_preset):
+                        print("File already exists. Enter new file name. (Enter) ")
+                    else:
+                        open(new_preset, "w").close()
+                        creating_preset = False
+                        input(f"File {new_preset} created. (Enter) ")
+            elif preset_command == "B":
+                None
 
 
     def generate():
