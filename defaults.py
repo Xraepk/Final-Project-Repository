@@ -22,8 +22,8 @@ DEFAULT_ATTRIBUTES = {
 "Hair Colors":["Blond", "Brown", "Black"],
 "Shoe Types":["Sneakers", "Boots", "Sandals"],
 "Outer Wear":["Hoodie", "Cardigan", "None"],
-"Shirt Colors":["Black,Blue,Grey,Green,Red,Yellow"],
-"Pants Types":["Jeans,Slacks,Sweat Pants"],
-"Special Wear":["Glasses,Jewelry"],
-"Special Items":["Bible,Flashlight"]
+"Shirt Colors":["Black", "Blue", "Grey", "Green", "Red", "Yellow"],
+"Pants Types":["Jeans", "Slacks", "Sweat Pants"],
+"Special Wear":["Glasses", "Jewelry"],
+"Special Items":["Bible", "Flashlight"]
                             }
