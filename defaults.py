@@ -24,6 +24,6 @@ DEFAULT_ATTRIBUTES = {
 "Outer Wear":["Hoodie", "Cardigan", "None"],
 "Shirt Colors":["Black", "Blue", "Grey", "Green", "Red", "Yellow"],
 "Pants Types":["Jeans", "Slacks", "Sweat Pants"],
-"Special Wear":["Glasses", "Jewelry"],
-"Special Items":["Bible", "Flashlight"]
+"Special Wear":["Glasses", "Jewelry", "None"],
+"Special Items":["Bible", "Flashlight", "None"]
                             }

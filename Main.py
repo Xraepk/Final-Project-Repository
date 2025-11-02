@@ -3,7 +3,6 @@ def main():
     import os
     import json
     import random
-    import datetime
     from defaults import DEFAULT_ROOMS, DEFAULT_NPCS, DEFAULT_ATTRIBUTES
 
     user_file = ""
@@ -37,9 +36,9 @@ def main():
                 input("Invalid input. (Enter) ")
 
     def main_menu():
-        clear()
         begin = False
         while begin == False:
+            clear()
             command = input("Enter \"A\" to begin generation.\nEnter \"B\" to create/edit presets.\n\nEnter: ").strip()
             if command.upper() == "A":
                 begin = True
@@ -284,9 +283,184 @@ def main():
                 special_item = random.choice(gen_attributes["Special Items"])
                 npc_dict[npc] = [is_killer, hair_length, hair_color, shoe_type, outer_wear, shirt_color, pants_type, special_wear, special_item]
 
-            game_interface(gen_rooms, npc_dict):
+            game_interface(gen_rooms, npc_dict, killer)
 
-    def game_interface(rooms, npcs):
+    def game_interface(rooms, npcs, killer):
+        hour = 11
+        minute = 3
+        game_active = True
+        note_pad = []
+        while game_active:
+            if len(npcs) > 1:
+                #Adds 30 minutes to game time
+                if hour == 12 and minute == 3:
+                    hour = 1
+                elif minute == 3:
+                    hour += 1
+                if minute == 3:
+                    minute = 0
+                else:
+                    minute = 3
+                round_active = True
+
+                npc_locations = {}
+                for room in rooms:
+                    npc_locations[room] = ""
+                for npc in npcs:
+                    room = random.choice(list(rooms))
+                    npc_locations[room] = npc_locations[room] + f" {npc},"
+
+                hostile = False
+                death_message = "No Death"
+                killed = None
+                kill_room = None
+
+                if input("Choose NPC to kill? (Y/anything else)" ).strip().upper() == "Y":
+                    picking_murder = True
+                    while picking_murder:
+                        clear()
+                        for npc in npcs:
+                            print(npc)
+                        kill_choice = input("\nEnter NPC name or \"NONE\" for no murder: ")
+                        if kill_choice.strip().upper() == "NONE":
+
+                            picking_murder = False
+                            hostile = True
+                        elif kill_choice in npcs:
+                            killed = kill_choice
+                            for room in npc_locations:
+                                if killed in npc_locations[room]:
+                                    kill_room = room
+                            death_message = f"{killed} was murdered in {kill_room}"
+                            picking_murder = False
+                        else:
+                            input("Invalid NPC. (Enter) ")
+
+                elif random.randint(1, 100) <= 75:
+                    killed = random.choice(list(npcs.keys()))
+                    while killed == killer:
+                        killed = random.choice(list(npcs.keys()))
+                    for room in npc_locations:
+                        if killed in npc_locations[room]:
+                            kill_room = room
+                    death_message = f"{killed} was murdered in {kill_room}"
+                else:
+                    hostile = True
+                for room in npc_locations:
+                    if killer in npc_locations[room]:
+                        killer_room = room
+
+                while round_active:
+                    clear()
+
+                    print(f"{killer} (Killer) is in {killer_room}")
+                    print(f"\nThe time is {hour}:{minute}0\n")
+                    print(death_message)
+                    print("\nEnter \"KEY\" for interface interaction menu")
+                    interface = input("\nEnter: ").strip()
+                    clear()
+                    if interface.upper() == "KEY":
+                        print("Interface commands:"
+                                      "\n\n\tEnter \"ROOM\" for room names"
+                                      "\n\tEnter \"NPC\" for NPC names"
+                                      "\n\tEnter \"HIDE\" for hide check"
+                                      "\n\tEnter \"CLUE\" for clue generation"
+                                      "\n\tEnter \"NEXT\" to end round"
+                                      "\n\tEnter \"END\" to end game"
+                                      "\n\tEnter \"NOTE\" to make a new note"
+                                      "\n\tEnter \"NOTEPAD\" to see your notes"
+                                      "\n\tEnter room name for room information"
+                                      "\n\tEnter character name for character information")
+                        input("\n(Enter) ")
+                    elif interface.upper() == "ROOM":
+                        for room in rooms:
+                            print(room)
+                        input("\n(Enter) ")
+                    elif interface.upper() == "NPC":
+                        for npc in npcs:
+                            print(npc)
+                        input("\n(Enter) ")
+                    elif interface.upper() == "HIDE":
+                        hiding_num = input("Enter number of hiding spots. Enter anything else to return. : ")
+                        is_num = True
+                        for character in hiding_num:
+                            if not (character in "123456789"):
+                                is_num = False
+                        if hiding_num.strip() == "":
+                            is_num = False
+                        if is_num == True:
+                            if not (random.randint(1, int(hiding_num)) == 1):
+                                print("Success")
+                            else:
+                                print("Failure")
+                        else:
+                            print("Invalid Number")
+                        input("\n(Enter) ")
+                    elif interface.upper() == "CLUE":
+                        clue_num = random.randint(1, 8)
+                        clue = npcs[killer][clue_num]
+                        if clue_num == 1:
+                            clue_type = "Hair Length"
+                        elif clue_num == 2:
+                            clue_type = "Hair Color"
+                        elif clue_num == 3:
+                            clue_type = "Shoe Type"
+                        elif clue_num == 4:
+                            clue_type = "Outer Wear"
+                        elif clue_num == 5:
+                            clue_type = "Shirt Color"
+                        elif clue_num == 6:
+                            clue_type = "Pants Type"
+                        elif clue_num == 7:
+                            clue_type = "Special Wear"
+                        elif clue_num == 8:
+                            clue_type = "Special Item"
+                        input(f"Clue: {clue_type} - {clue}")
+                    elif interface.upper() == "NEXT":
+                        round_active = False
+                        continue
+                    elif interface.upper() == "END":
+                        round_active = False
+                        game_active = False
+                    elif interface.upper() == "NOTE":
+                        new_note = input("Enter note: ")
+                        note_pad.append(f"\t- {new_note}")
+                    elif interface.upper() == "NOTEPAD":
+                        print("Notes:\n")
+                        for note in note_pad:
+                            print(note)
+                        input("\n(Enter) ")
+                    elif interface in rooms.keys():
+                        print(f"{interface} information:")
+                        print(f"\n\tDescription: {rooms[interface].replace("\n", " ")}")
+                        print(f"\n\tCharacters in {interface}:{npc_locations[interface][:-1]}")
+                        if hostile and interface == killer_room:
+                            print(f"\n\tHOSTILE AREA : {killer.upper()}")
+                        elif interface == kill_room:
+                            print(f"\n\t{killed} is Dead.")
+                        input("\n(Enter) ")
+                    elif interface in npcs.keys():
+                        current_room = "I should be assigned. Problemo."
+                        for room in npc_locations:
+                            if interface in npc_locations[room]:
+                                current_room = room
+                        print(f"\n{interface} information:\n"
+                              f"\n\tHair Length: {npcs[interface][1]}"
+                              f"\n\tHair Color: {npcs[interface][2]}"
+                              f"\n\tShoe Type: {npcs[interface][3]}"
+                              f"\n\tOuter Wear: {npcs[interface][4]}"
+                              f"\n\tShirt Color: {npcs[interface][5]}"
+                              f"\n\tPants Type: {npcs[interface][6]}"
+                              f"\n\tSpecial Wear: {npcs[interface][7]}"
+                              f"\n\tSpecial item: {npcs[interface][8]}"
+                              f"\n\n\tCurrent Whereabouts: {current_room}")
+                        input("\n(Enter) ")
+
+                if killed:
+                    npcs.pop(killed)
+            else:
+                input("All NPCs are dead. (Enter) ")
+                game_active = False
 
 
 
