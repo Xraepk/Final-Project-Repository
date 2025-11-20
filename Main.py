@@ -5,6 +5,7 @@ from defaults import DEFAULT_ROOMS, DEFAULT_NPCS, DEFAULT_ATTRIBUTES
 
 # Universal file directory. Does not change after sign-in
 user_file = ""
+
 def clear():
     """Clears the screen. Purely for aesthetics and readability."""
     os.system('cls' if os.name == 'nt' else 'clear')
