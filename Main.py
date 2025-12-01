@@ -169,7 +169,7 @@ def preset_manager():
                                         write_preset(edit_preset, rooms, npc_list, attributes)
                                         input("File updated. (Enter) ")
                                 elif name.strip().upper()[:1].isdigit():
-                                    print("Invalid room name.")
+                                    print("Invalid NPC name.")
                                 else:
                                     npc_list.append(name)
                         elif edit_command == "C":
@@ -205,7 +205,7 @@ def preset_manager():
                             while attribute_name.strip().upper() != "DONE":
                                 attribute_name = input(f"Enter {edit_attribute} name: ")
                                 if attribute_name.strip().upper()[:1].isdigit():
-                                    print("Invalid room name.")
+                                    print("Invalid attribute name.")
                                 elif attribute_name.strip().upper() != "DONE":
                                     new_attribute_list.append(attribute_name)
 
