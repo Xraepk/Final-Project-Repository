@@ -5,6 +5,7 @@ from defaults import DEFAULT_ROOMS, DEFAULT_NPCS, DEFAULT_ATTRIBUTES
 
 # Universal file directory. Does not change after sign-in
 user_file = ""
+
 def clear():
     """Clears the screen. Purely for aesthetics and readability."""
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -40,11 +41,16 @@ def main_menu():
     begin = False
     while begin == False:
         clear()
-        command = input("Enter \"A\" to begin generation.\nEnter \"B\" to create/edit presets.\n\nEnter: ").strip()
-        if command.upper() == "A":
+        command = input("Enter \"A\" to begin generation."
+                        "\nEnter \"B\" to create/edit presets."
+                        "\nEnter \"C\" to enter the tutorial"
+                        "\n\nEnter: ").strip().upper()
+        if command == "A":
             begin = True
-        elif command.upper() == "B":
+        elif command == "B":
             preset_manager()
+        elif command == "C":
+            tutorial()
 
 def write_preset(name, rooms=DEFAULT_ROOMS, npcs=DEFAULT_NPCS, attributes=DEFAULT_ATTRIBUTES):
     """Writes/Re-Writes presets for preset creation and preset edits."""
@@ -234,6 +240,117 @@ def preset_manager():
         else:
             changing_presets = False
             clear()
+
+def tutorial():
+    """Function for teaching users how to Dungeon Master"""
+
+    tutorial_active = True
+    while tutorial_active:
+        clear()
+        tutorial_nav = input("Welcome to Nocturne of the Lamb!"
+                            "\n\nNever played before? We've got you covered!"
+                            "\nWhat would you like to learn?"
+                             "\n\n1) What is the game about?"
+                             "\n2) How do you play?"
+                             "\n3) How do you Dungeon Master?"
+                             "\n4) What does the app do for me?"
+                             "\n5) How do I make a new preset?"
+                             "\n6) Return to main menu"
+                            "\n\nEnter: ")
+        if tutorial_nav == "1":
+            clear()
+            input("So what is Nocturne of the Lamb really about?"
+                  "\n\nWanna know a secret?"
+                  "\nIT'S ABOUT WHATEVER YOU WANT!"
+                  "\nThis game does have some defaults to get you started,"
+                  "\nHOWEVER,"
+                  "\nThis game is completely customizable and the story is whatever you decide!"
+                  "\n\n(Enter) ")
+        elif tutorial_nav == "2":
+            clear()
+            input("So how are you supposed to play Nocturne of the Lamb?"
+                  "\n\nFor the player, all you need to play is something to take notes on!"
+                  "\nThis game is all about gathering clues, making deductions, and surviving."
+                  "\nAt the beginning of every round, your Dungeon Master will tell you:"
+                  "\n\nA) What time it is (A.K.A. the name of the round) and"
+                  "\nB) What happens immediately (eg screaming, lights go out)"
+                  "\n\nThe Dungeon Master will inform you when it is your turn."
+                  "\nAt this point you will simply begin by declaring to which room you would like to go."
+                  "\nAfter your character is \"in the room\", "
+                  "your Dungeon Master will describe to you what your character finds."
+                  "\n\nAfter this, while you are in the room, you have the following actions:"
+                  "\n\nA) Speaking to characters"
+                  "\nB) Searching the room for clues"
+                  "\nC) Inspecting a body"
+                  "\n\nOccasionally if the killer is in \"HOSTILE\" state,"
+                  "\nYou have the additional action to hide from the killer."
+                  "\nIf you fail to hide (Determined by this app or a D20) then you die."
+                  "\n\nYou lose the game if every player dies or if all NPC's die before you discover the killer."
+                  "\nYou win by discovering the killer, surviving, and proving it using substantial evidence."
+                  "\nWhat is \"substantial evidence\" is determined by your Dungeon Master."
+                  "\nAny gameplay change to this style will be explained before hand by your DM"
+                  "\n\n(Enter) ")
+        elif tutorial_nav == "3":
+                clear()
+                input("So how do you Dungeon Master for Nocturne of the Lamb?"
+                      "\n\nFirst of all you are going to want a few things."
+                      "\n\nA) Something to take notes (Optional - The interface has a notepad)"
+                      "\nB) This app"
+                      "\nC) A drawn map of your area (Optional - only for visualization)"
+                      "\nD) A D6 (Suggested) and D20 (Optional)"
+                      "\n\nYou will start your game by going to generate and either choosing a preset name or Classic."
+                      "\nOnce the preset loads you will have the option to choose who you want the killer to be."
+                      "\nFeel free to just enter random for your first time!"
+                      "\n\nNow the game is fully set up. Tell everyone what room they all begin in."
+                      "\nThis doesn't matter much but it's useful for the first murder "
+                      "if you want them to know the direction of a scream."
+                      "\n\nAfter this you start the first round by declaring what time it is and what happens."
+                      "\nExample: \"It is now 12:00. You hear a blood-curdling scream ring out from the east.\""
+                      "\nNext, you go around the table running each player through their turn."
+                      "\nFirst, ask them to pick a location they would like to inspect."
+                      "\nOnce their character is there, describe the room to them and who is there."
+                      "\nThen, as they meet people inform them about character attributes that are clearly visible"
+                      "\nIf they inspect something, to see if they find a clue you ust first "
+                      "decide if there is a clue to find"
+                      "\nIf there is, use the built check feature in the interface. "
+                      "(Enter \"key\" to see commands in the interface)"
+                      "\nTo do a check, first have you player roll a D6 and then input the number for the check."
+                      "\nThe game will tell you if the chack fails or not. "
+                      "\nCheck can also be used when trying to hide from a hostile killer"
+                      "\n\nIf the check is successful, use the clue feature of the interface."
+                      "\nThis will tell you what piece of information about the killer to give to your player."
+                      "\n\nThose are the basics! Because this game is customizable, feel free to break rules!"
+                      "\nExperiment! Write your own story! Add fake clues! Good luck!"
+                      "\nMake sure to look through the key page of the interface."
+                      "\nThere are all sorts of commands to make your life easier!"
+                      "\n(Enter) ")
+        elif tutorial_nav == "4":
+            clear()
+            input("So what does this app do for me as a Dungeon Master?"
+                  "\n\nWell, first of all we have the interface. The interface has randomization capabilities."
+                  "\nIt also keeps track of all player information at all times so you don't have to worry!"
+                  "\nWith commands from the interface you can do the following:"
+                  "\n\nA) Summon a list of room names"
+                  "\nB) Summon a list of NPC names"
+                  "\nC) Perform a D6 roll based check"
+                  "\nD) Continue to the next round"
+                  "\nE) End the game"
+                  "\nF) Write and look at notes from you digital notepad"
+                  "\nG) Summon information from a specific room"
+                  "\nH) Summon information from a specific NPC"
+                  "\n\nAll of the interface commands are designed to make your gameplay smoother, "
+                  "so make sure to try them!"
+                  "\n\nThis app also allows you to store presets so you can play your own maps and NPC sets!"
+                  "\n(Enter) ")
+        elif tutorial_nav == "5":
+            clear()
+            input("So how do you make a new preset?"
+                  "\n\nThe system is fairly self explanatory so once you go to presets just follow the instructions!"
+                  "\nMake a new preset with default variables, then swap out the defaults with whatever you like!"
+                  "\nYou can also delete any presets you don't want on your system."
+                  "\n(Enter) ")
+        elif tutorial_nav == "6":
+            tutorial_active = False
 
 def generate():
     """Generates character attributes into a dictionary and passes
