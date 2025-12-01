@@ -139,8 +139,9 @@ def preset_manager():
                         if edit_command == "A":
                             clear()
                             room_dict = dict()
-                            print("Enter room names one at a time, then enter its description."
-                                  " Enter \"DONE\" to finish.\n")
+                            print("Enter room names one at a time, then enter its description. "
+                                  "(!NAME CANNOT START WITH A DIGIT!)"
+                                  " \nEnter \"DONE\" to finish.\n")
                             name = ""
                             while name.strip().upper() != "DONE":
                                 name = input("Enter room name: ")
@@ -149,13 +150,16 @@ def preset_manager():
                                     if finalize == "Y":
                                         write_preset(edit_preset, room_dict, npcs, attributes)
                                         input("File updated. (Enter) ")
+                                elif name.strip().upper()[:1].isdigit():
+                                    print("Invalid room name.")
                                 else:
                                     description = input(f"Enter {name} description: ")
                                     room_dict[name] = description
                         elif edit_command == "B":
                             clear()
                             npc_list = []
-                            print("Enter NPC names one at a time. Enter \"DONE\" to finish.\n")
+                            print("Enter NPC names one at a time. (!NAME CANNOT START WITH A DIGIT!) "
+                                  "\nEnter \"DONE\" to finish.\n")
                             name = ""
                             while name.strip().upper() != "DONE":
                                 name = input("Enter NPC name: ").title()
@@ -164,6 +168,8 @@ def preset_manager():
                                     if finalize == "Y":
                                         write_preset(edit_preset, rooms, npc_list, attributes)
                                         input("File updated. (Enter) ")
+                                elif name.strip().upper()[:1].isdigit():
+                                    print("Invalid room name.")
                                 else:
                                     npc_list.append(name)
                         elif edit_command == "C":
@@ -194,10 +200,13 @@ def preset_manager():
                                     edit_attribute = category
                             new_attribute_list = []
                             attribute_name = ""
-                            print(f"\nEnter {edit_attribute} names. Enter \"DONE\" to finish.\n")
+                            print(f"\nEnter {edit_attribute} names. (!NAME CANNOT START WITH A DIGIT!)"
+                                  f"\nEnter \"DONE\" to finish.\n")
                             while attribute_name.strip().upper() != "DONE":
                                 attribute_name = input(f"Enter {edit_attribute} name: ")
-                                if attribute_name.strip().upper() != "DONE":
+                                if attribute_name.strip().upper()[:1].isdigit():
+                                    print("Invalid room name.")
+                                elif attribute_name.strip().upper() != "DONE":
                                     new_attribute_list.append(attribute_name)
 
                             finalize = input(f"Rewrite {edit_attribute}? (Y/anything else) ").strip().upper()
@@ -489,26 +498,26 @@ def game_interface(rooms, npcs, killer):
                 clear()
                 if interface.upper() == "KEY":
                     print("Interface commands:"
-                          "\n\n\tEnter \"ROOM\" for room names"
-                          "\n\tEnter \"NPC\" for NPC names"
-                          "\n\tEnter \"CHECK\" for a roll based check"
-                          "\n\tEnter \"CLUE\" for clue generation"
-                          "\n\tEnter \"NEXT\" to end round"
-                          "\n\tEnter \"END\" to end game"
-                          "\n\tEnter \"NOTE\" to make a new note"
-                          "\n\tEnter \"NOTEPAD\" to see your notes"
+                          "\n\n\tEnter \"1\" for room names"
+                          "\n\tEnter \"2\" for NPC names"
+                          "\n\tEnter \"3\" for a roll based check"
+                          "\n\tEnter \"4\" for clue generation"
+                          "\n\tEnter \"5\" to end round"
+                          "\n\tEnter \"6\" to end game"
+                          "\n\tEnter \"7\" to make a new note"
+                          "\n\tEnter \"8\" to see your notes"
                           "\n\tEnter room name for room information"
                           "\n\tEnter character name for character information")
                     input("\n(Enter) ")
-                elif interface.upper() == "ROOM":
+                elif interface.upper() == "1":
                     for room in rooms:
                         print(room)
                     input("\n(Enter) ")
-                elif interface.upper() == "NPC":
+                elif interface.upper() == "2":
                     for npc in npcs:
                         print(npc)
                     input("\n(Enter) ")
-                elif interface.upper() == "CHECK":
+                elif interface.upper() == "3":
                     hiding_num = input("Enter D6 roll. Enter anything else to return. : ")
                     is_num = True
                     for character in hiding_num:
@@ -524,7 +533,7 @@ def game_interface(rooms, npcs, killer):
                     else:
                         print("Invalid Number")
                     input("\n(Enter) ")
-                elif interface.upper() == "CLUE":
+                elif interface.upper() == "4":
                     clue_num = random.randint(1, 8)
                     clue = npcs[killer][clue_num]
                     clue_type = None
@@ -545,16 +554,16 @@ def game_interface(rooms, npcs, killer):
                     elif clue_num == 8:
                         clue_type = "Special Item"
                     input(f"Clue: {clue_type} - {clue}")
-                elif interface.upper() == "NEXT":
+                elif interface.upper() == "5":
                     round_active = False
                     continue
-                elif interface.upper() == "END":
+                elif interface.upper() == "6":
                     round_active = False
                     game_active = False
-                elif interface.upper() == "NOTE":
+                elif interface.upper() == "7":
                     new_note = input("Enter note: ")
                     note_pad.append(f"\t- {new_note}")
-                elif interface.upper() == "NOTEPAD":
+                elif interface.upper() == "8":
                     print("Notes:\n")
                     for note in note_pad:
                         print(note)
