@@ -25,8 +25,10 @@ def sign_in():
             else:
                 input("Invalid file. (Enter) ")
         elif has_account == "N":
-            user_file = input("Enter new file name: ")
-            if os.path.exists(user_file) or os.path.isfile(user_file):
+            user_file = input("Enter new file name or enter \"0\" to return: ")
+            if user_file == "0":
+                pass
+            elif os.path.exists(user_file) or os.path.isfile(user_file):
                 input("File already exists. Enter new file name. (Enter) ")
             else:
                 open(user_file, "w").close()
