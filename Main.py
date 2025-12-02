@@ -457,12 +457,15 @@ def game_interface(rooms, npcs, killer):
                 while picking_murder:
                     clear()
                     for npc in npcs:
-                        print(npc)
+                        if npc != killer:
+                            print(npc)
                     kill_choice = input("\nEnter NPC name or \"NONE\" for no murder: ")
                     if kill_choice.strip().upper() == "NONE":
 
                         picking_murder = False
                         hostile = True
+                    elif kill_choice == killer:
+                        input("Invalid NPC. (Enter) ")
                     elif kill_choice in npcs:
                         killed = kill_choice
                         for room in npc_locations:
