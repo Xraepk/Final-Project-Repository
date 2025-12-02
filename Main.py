@@ -399,6 +399,7 @@ def generate():
             break
 
         clear()
+        killer = ""
         choose_killer = input("Choose killer? (Y/anything else for random): ").strip().upper()
         if choose_killer == "Y":
             choice_accepted = False
