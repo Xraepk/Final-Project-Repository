@@ -398,7 +398,23 @@ def generate():
         else:
             break
 
-        killer = random.choice(gen_npcs)
+        clear()
+        choose_killer = input("Choose killer? (Y/anything else for random): ").strip().upper()
+        if choose_killer == "Y":
+            choice_accepted = False
+            while not choice_accepted:
+                clear()
+                for npc in gen_npcs:
+                    print(npc)
+                killer_choice = input("Enter killer name: ")
+                if killer_choice in gen_npcs:
+                    killer = killer_choice
+                    choice_accepted = True
+                else:
+                    input("Invalid killer name. (Enter) ")
+
+        else:
+            killer = random.choice(gen_npcs)
         npc_dict = {}
         for npc in gen_npcs:
             is_killer = True if npc == killer else False
